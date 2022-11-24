@@ -12,18 +12,33 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setUserState } from "../../../core/store/user/actions";
+import { initAxiosInstance } from "../../../core/services/api";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
-export default function SignIn() {
+export const AuthScreen = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const response = await axios.post("auth/login", {
-      username: data.get("email"),
-      password: data.get("password"),
-    });
-    localStorage.setItem("accessToken", response.data.access_token);
+    try {
+      const response = await axios.post("auth/login", {
+        username: data.get("email"),
+        password: data.get("password"),
+      });
+      localStorage.setItem("accessToken", response.data.access_token);
+      initAxiosInstance();
+      const profile = await axios.get("profile");
+      dispatch(setUserState(profile.data));
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -82,7 +97,7 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="src/ui/pages/SignIn#" variant="body2">
+                <Link href="src/ui/pages/auth/index#" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
@@ -92,4 +107,4 @@ export default function SignIn() {
       </Container>
     </ThemeProvider>
   );
-}
+};

@@ -13,7 +13,7 @@ export enum GENDER_ENUM {
 export type UserExpand = Array<"favourite_attractions">;
 
 export default class User extends BaseModel {
-  public id: number = 0;
+  public _id: string = "";
   public firstName: string = "";
   public lastName: string = "";
   public email: string = "";
@@ -51,10 +51,6 @@ export default class User extends BaseModel {
     const result = regex.exec(this.lastLocation);
     const [lat, lon]: string[] = result ? result[1].split(" ").reverse() : [];
     return lat && lon ? { lat: Number(lat), lon: Number(lon) } : undefined;
-  }
-
-  public generateSRIDString(point: Point) {
-    return `SRID=4326;POINT (${point.lon} ${point.lat})`;
   }
 
   constructor(data: Partial<User>) {

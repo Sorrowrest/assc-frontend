@@ -27,7 +27,7 @@ const addUserToStore = (
 export default createReducer<UserState>(initialState, {
   [USER_ACTIONS.SET_USER_STATE]: (state, action) => ({
     ...state,
-    ...action.payload,
+    user: action.payload,
   }),
   [USER_ACTIONS.ADD_USER_TO_STORE]: addUserToStore,
 });

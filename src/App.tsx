@@ -1,25 +1,27 @@
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React, { useEffect } from "react";
 import "./App.css";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import SignIn from "./ui/pages/SignIn";
-import { initAxiosInstance } from "./core/services/api";
+import { Router } from "./ui/pages/router";
+import axios from "axios";
+import { setUserState } from "./core/store/user/actions";
+import { useDispatch } from "react-redux";
+
+const theme = createTheme();
 
 function App() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
-    const isAuthorized = initAxiosInstance();
-
-    if (!isAuthorized) {
-      navigate("/sign");
-    }
+    (async () => {
+      const profile = await axios.get("profile");
+      console.log(profile.data);
+      dispatch(setUserState(profile.data));
+    })();
   }, []);
 
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/sign" element={<SignIn />} />
-      </Routes>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Router />
+    </ThemeProvider>
   );
 }
 
