@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { Router } from "./ui/pages/router";
 import axios from "axios";
-import { setUserState } from "./core/store/user/actions";
+import { setUserState } from "@core/store/user/actions";
 import { useDispatch } from "react-redux";
 
 const theme = createTheme();

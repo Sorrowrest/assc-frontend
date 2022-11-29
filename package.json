@@ -25,10 +25,10 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": [
@@ -49,8 +49,10 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.0.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "prettier": "^2.7.1",
+    "react-app-alias": "^2.2.2",
     "tsconfig-paths-webpack-plugin": "^4.0.0"
   }
 }
