@@ -1,8 +1,7 @@
-import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
-import axios, { AxiosError, AxiosRequestConfig, Method } from "axios";
+import axios from "axios";
 
 export const initAxiosInstance = () => {
-  axios.defaults.baseURL = "http://localhost:5000/";
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
   const token = localStorage.getItem("accessToken");
   axios.interceptors.request.use(async (config) => {
     if (!config.headers) {
@@ -15,6 +14,7 @@ export const initAxiosInstance = () => {
   });
   return !!token;
 };
+/*
 
 export const axiosBaseQuery =
   (
@@ -55,3 +55,4 @@ export const axiosBaseQuery =
       };
     }
   };
+*/
