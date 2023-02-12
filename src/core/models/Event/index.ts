@@ -1,5 +1,5 @@
 import { BaseModel } from "sjs-base-model";
-import User from "../User";
+import { User } from "../User";
 
 export default class Event extends BaseModel {
   public _id: string = "";

@@ -1,27 +1,39 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import React, { useEffect } from "react";
-import "./App.css";
-import { Router } from "./ui/pages/router";
-import axios from "axios";
-import { setUserState } from "./core/store/user/actions";
-import { useDispatch } from "react-redux";
+import { ThemeProvider } from "@mui/material/styles";
+import React from "react";
+import "./App.scss";
+import { Router } from "./pages/router";
+import { theme } from "@app/theme";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { initAxiosInstance } from "@core/services/api";
 
-const theme = createTheme();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: false },
+  },
+});
+initAxiosInstance();
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    (async () => {
-      const profile = await axios.get("profile");
-      console.log(profile.data);
-      dispatch(setUserState(profile.data));
-    })();
-  }, []);
-
   return (
-    <ThemeProvider theme={theme}>
-      <Router />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <Router />
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          draggable
+          theme="light"
+        />
+      </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
