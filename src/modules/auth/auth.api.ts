@@ -1,12 +1,18 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { SignInRequest } from "@app/modules/auth/auth.type";
-import { QueryFunction, QueryKey } from "@tanstack/react-query";
-import { User } from "@app/core/models/User";
-import { initAxiosInstance } from "@core/services/api";
+import { User } from "@core/models/User";
 
-export const getAuth: QueryFunction<User, QueryKey> = async () => {
-  initAxiosInstance();
-  return await axios.get("profile");
+export const getAuth = async (token?: string | null) => {
+  try {
+    return (await axios.get("profile", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })) as AxiosResponse<User>;
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
 };
 
 export const signIn = async (data: SignInRequest) => {
@@ -15,7 +21,6 @@ export const signIn = async (data: SignInRequest) => {
       "auth/login",
       data
     );
-    localStorage.setItem("accessToken", response.data.access_token);
     return response.data.access_token;
   } catch (e) {
     console.error(e);

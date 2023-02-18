@@ -1,20 +1,34 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAuth } from "../auth.api";
-import { User } from "@core/models/User";
-import { AxiosError } from "axios";
+import {
+  ProfileStateProps,
+  useProfileStore,
+} from "@app/modules/auth/store/profile";
+import { User } from "@app/core/models/User";
+import { AxiosResponse } from "axios";
+
+const onError = (removeAll: ProfileStateProps["removeAll"]) => {
+  removeAll();
+};
 
 export const useIsAuth = () => {
-  const token = localStorage.getItem("accessToken");
+  const { accessToken, setProfile, removeAll } = useProfileStore();
 
-  const { data, isLoading } = useQuery<User, AxiosError>(["profile"], getAuth, {
-    enabled: !!token,
-  });
+  const { data, isLoading } = useQuery<AxiosResponse<User> | null, Error>(
+    ["profile"],
+    () => getAuth(accessToken),
+    {
+      onError: () => onError(removeAll),
+      onSuccess: (dt) => dt && setProfile(dt.data),
+      enabled: !!accessToken,
+    }
+  );
 
-  if (!token)
+  if (!accessToken)
     return {
       isLoading: false,
-      isAuth: false,
+      data: null,
     };
 
-  return { isAuth: !!data, isLoading };
+  return { data, isLoading };
 };

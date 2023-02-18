@@ -10,14 +10,7 @@ export const theme = createTheme({
     button: {
       textTransform: "none",
     },
-    fontFamily: [
-      "Inter",
-      "system-ui",
-      "Avenir",
-      "Helvetica",
-      "Arial",
-      "sans-serif",
-    ].join(","),
+    fontFamily: ["Aqum", "sans-serif"].join(","),
   },
   palette: {
     mode: "light",

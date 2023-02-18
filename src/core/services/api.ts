@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const initAxiosInstance = () => {
   axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-  const token = localStorage.getItem("accessToken");
+  const token = JSON.parse(localStorage.getItem("profile-storage") as any).state
+    .accessToken;
   axios.interceptors.request.use(async (config) => {
     if (!config.headers) {
       config.headers = {};

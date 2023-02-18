@@ -1,6 +1,6 @@
 import * as React from "react";
-import Container from "@mui/material/Container";
+import styles from "./main.module.css";
 
 export const MainScreen = () => {
-  return <Container component="main"></Container>;
+  return <div className={styles.wrapper}></div>;
 };
