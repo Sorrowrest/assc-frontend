@@ -1,22 +1,25 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AuthScreen } from "./auth/auth";
-import { MainScreen } from "./main/main";
 import { useIsAuth } from "@app/modules/auth/hooks/useIsAuth";
+import { useProfileStore } from "@app/modules/auth/store/profile";
+import { LayoutComponent } from "@app/modules/layout/layout";
 
 export const Router = () => {
-  const { isLoading, isAuth } = useIsAuth();
+  const { isLoading, data } = useIsAuth();
   const navigate = useNavigate();
+  const { removeAll } = useProfileStore();
 
   useEffect(() => {
-    if (!isLoading && !isAuth) {
+    if (!isLoading && !data) {
+      removeAll();
       navigate("/sign");
     }
-  }, [isAuth, navigate, isLoading]);
+  }, [data, navigate, isLoading, removeAll]);
 
   return (
     <Routes>
-      <Route index element={<MainScreen />} />
+      <Route index element={<LayoutComponent />} />
       <Route path="/sign" element={<AuthScreen />} />
     </Routes>
   );

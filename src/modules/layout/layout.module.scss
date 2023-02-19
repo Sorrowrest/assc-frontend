@@ -1,0 +1,14 @@
+.wrapper {
+  background-color: #F0F7FF;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.contentWithMenu {
+  display: grid;
+  grid-template-columns: .25fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    ". .";
+}
