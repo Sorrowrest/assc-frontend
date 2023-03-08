@@ -1,0 +1,25 @@
+@import "src/shared";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.headStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: max-content;
+}
+
+.nextEvent {
+  cursor: pointer;
+  margin-top: 37px;
+  padding: 20px;
+  background: $gradient;
+}
+
+.textNext {
+  text-align: center;
+}

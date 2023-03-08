@@ -9,6 +9,10 @@ const styleSizes: Record<string, CSSProperties> = {
     fontSize: 12,
     lineHeight: "15.12px",
   },
+  "14": {
+    fontSize: 14,
+    lineHeight: "23.23px",
+  },
   "16": {
     fontSize: 16,
     lineHeight: "20.16px",
@@ -26,17 +30,29 @@ const styleSizes: Record<string, CSSProperties> = {
 type TextProps = React.FC<
   HTMLAttributes<HTMLParagraphElement> & {
     size?: number;
+    alternative?: boolean;
   }
 > & {
   Link: React.FC<LinkProps>;
 };
 
-export const Text: TextProps = ({ className, style, size = 16, ...props }) => {
+export const Text: TextProps = ({
+  className,
+  color,
+  style,
+  alternative = false,
+  size = 16,
+  ...props
+}) => {
   return (
     <p
       {...props}
-      style={Object.assign({ ...style }, styleSizes[size])}
-      className={cn(styles.wrapper, className)}
+      style={Object.assign({ ...style, color }, styleSizes[size])}
+      className={cn(
+        alternative && styles.wrapper,
+        styles.defaultStyle,
+        className
+      )}
     ></p>
   );
 };

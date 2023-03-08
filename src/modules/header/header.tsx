@@ -12,7 +12,9 @@ export const Header = () => {
       </Link>
 
       <div className={styles.rightBlock}>
-        <Text.Link to="/sign">ВЫЙТИ</Text.Link>
+        <Text.Link className={styles.link} to="/sign">
+          ВЫЙТИ
+        </Text.Link>
       </div>
     </div>
   );

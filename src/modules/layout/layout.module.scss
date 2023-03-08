@@ -8,7 +8,13 @@
   display: grid;
   grid-template-columns: .25fr 1fr;
   grid-template-rows: 1fr;
-  gap: 0px 0px;
+  gap: 24px;
   grid-template-areas:
     ". .";
+}
+
+.content {
+  display: flex;
+  gap: 34px;
+  padding-right: 65px;
 }

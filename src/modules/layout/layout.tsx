@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./layout.module.scss";
 import { Header } from "@app/modules/header";
 import { AsideMenu } from "@app/modules/aside/aside";
+import { Outlet } from "react-router-dom";
 
 export const LayoutComponent = () => {
   return (
@@ -9,7 +10,9 @@ export const LayoutComponent = () => {
       <Header></Header>
       <div className={styles.contentWithMenu}>
         <AsideMenu />
-        <div></div>
+        <div className={styles.content}>
+          <Outlet />
+        </div>
       </div>
     </div>
   );
