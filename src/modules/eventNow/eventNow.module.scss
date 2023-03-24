@@ -1,0 +1,49 @@
+@import "src/shared";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 40%;
+  padding: 28px;
+  padding-bottom: 134px;
+  background: $gradient;
+  gap: 24px;
+
+  & p {
+    color: $secondary;
+  }
+}
+
+.head {
+  display: flex;
+  gap: 8px;
+
+  & p {
+    width: max-content;
+  }
+}
+
+.class {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 17px;
+  font-family: Jost, sans-serif;
+}
+
+.eventChecker {
+  cursor: pointer;
+  white-space: normal;
+  border: none;
+  position: absolute;
+  width: 50%;
+  height: 60px;
+  left: 0;
+  bottom: 60px;
+}
+
+.checkerText {
+  text-align: left;
+  padding-left: 24px;
+  line-height: 20px !important;
+}

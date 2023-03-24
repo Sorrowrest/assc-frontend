@@ -1,0 +1,30 @@
+@import "src/shared";
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+}
+
+.avatarBlock {
+  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text {
+  width: max-content;
+}
+
+.avatar {
+  border-radius: 50%;
+  border: 10px solid $four;
+  width: 170px;
+  height: 170px;
+}
