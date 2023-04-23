@@ -31,6 +31,7 @@ type TextProps = React.FC<
   HTMLAttributes<HTMLParagraphElement> & {
     size?: number;
     alternative?: boolean;
+    font?: "Jost" | "Aqum";
   }
 > & {
   Link: React.FC<LinkProps>;
@@ -42,6 +43,7 @@ export const Text: TextProps = ({
   style,
   alternative = false,
   size = 16,
+  font,
   ...props
 }) => {
   return (
@@ -51,7 +53,10 @@ export const Text: TextProps = ({
       className={cn(
         alternative && styles.wrapper,
         styles.defaultStyle,
-        className
+        className,
+        {
+          [styles.jostFont]: font === "Jost",
+        }
       )}
     ></p>
   );
@@ -60,6 +65,7 @@ export const Text: TextProps = ({
 type LinkProps = RRDLinkProps & {
   external?: boolean;
   size?: number;
+  font?: "Jost" | "Aqum";
 };
 
 const Link: React.FC<LinkProps> = ({
@@ -67,23 +73,33 @@ const Link: React.FC<LinkProps> = ({
   size = 16,
   style,
   external = false,
+  font,
+  color,
   ...props
 }) => {
   if (external) {
     return (
       <a
         {...props}
-        style={Object.assign({ ...style }, styleSizes[size])}
+        rel="noreferrer"
+        target="_blank"
+        style={Object.assign({ ...style, color }, styleSizes[size])}
         href={props.to as string}
-        className={cn(styles.link, className)}
-      ></a>
+        className={cn(styles.link, className, {
+          [styles.jostFont]: font === "Jost",
+        })}
+      >
+        {props.children}
+      </a>
     );
   }
   return (
     <RRDLink
       {...props}
-      style={Object.assign({ ...style }, styleSizes[size])}
-      className={cn(styles.link, className)}
+      style={Object.assign({ ...style, color }, styleSizes[size])}
+      className={cn(styles.link, className, {
+        [styles.jostFont]: font === "Jost",
+      })}
     ></RRDLink>
   );
 };

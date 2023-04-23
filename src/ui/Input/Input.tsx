@@ -27,15 +27,44 @@ const CustomInput = styled(MUIInput)({
   },
 });
 
+const ProfileInput = styled(MUIInput)({
+  "& .MuiInputBase-input": {
+    borderRadius: 0,
+    padding: "10px 12px",
+    color: "#000000",
+    backgroundColor: "#FFFFFF",
+  },
+  "& .MuiInputBase-disabled": {
+    borderRadius: 0,
+    border: "none",
+    padding: "10px 12px",
+    color: "#000000",
+    backgroundColor: "#FFFFFF",
+  },
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#FFFFFF",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#FFFFFF",
+      borderRadius: 0,
+    },
+    "&:hover fieldset": {
+      borderColor: "#FFFFFF",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#FFFFFF",
+    },
+  },
+});
+
 type CustomTextFieldProps = Omit<TextFieldProps, "color"> & {
   color: "primary" | "secondary";
 };
 
-export const Input: React.FC<CustomTextFieldProps> = ({
-  label,
-  color = "secondary",
-  ...props
-}) => {
+export const Input: React.FC<CustomTextFieldProps> & {
+  Profile: React.FC<CustomTextFieldProps>;
+} = ({ label, color = "secondary", ...props }) => {
   const labelColor: Record<CustomTextFieldProps["color"], string> = {
     secondary: styles.label__secondary,
     primary: styles.label__primary,
@@ -48,3 +77,23 @@ export const Input: React.FC<CustomTextFieldProps> = ({
     </div>
   );
 };
+
+const ProfileInputBlock: React.FC<CustomTextFieldProps> = ({
+  label,
+  color = "secondary",
+  ...props
+}) => {
+  const labelColor: Record<CustomTextFieldProps["color"], string> = {
+    secondary: styles.label__secondary,
+    primary: styles.label__primary,
+  };
+
+  return (
+    <div className={styles.wrapper}>
+      <label className={cn(styles.label, labelColor[color])}>{label}</label>
+      <ProfileInput {...props} className={styles.wrapper}></ProfileInput>
+    </div>
+  );
+};
+
+Input.Profile = ProfileInputBlock;

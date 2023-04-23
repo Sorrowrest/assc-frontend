@@ -1,0 +1,1 @@
+export { TalonsBlock } from "./talons";

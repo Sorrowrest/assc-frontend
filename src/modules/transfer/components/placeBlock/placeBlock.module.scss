@@ -1,0 +1,17 @@
+@import "src/shared";
+
+.blocksWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px 10px;
+  margin-top: 10px;
+}
+
+.block {
+  background-color: $secondary;
+  padding: 8px 18px;
+}
+
+.blockTooltip {
+  color: $four;
+}

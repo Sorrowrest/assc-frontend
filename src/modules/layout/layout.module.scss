@@ -10,11 +10,20 @@
   grid-template-rows: 1fr;
   gap: 24px;
   grid-template-areas:
-    ". .";
+    "fullWidth fullWidth";
 }
 
 .content {
   display: flex;
   gap: 34px;
   padding-right: 65px;
+}
+
+.disablePadding {
+  padding-right: 0;
+}
+
+.fullWidth {
+  grid-area: fullWidth;
+  padding-right: 0;
 }

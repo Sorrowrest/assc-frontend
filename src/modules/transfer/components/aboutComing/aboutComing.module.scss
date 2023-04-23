@@ -1,0 +1,9 @@
+@import "src/shared";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: $secondary;
+  padding: 40px;
+}
