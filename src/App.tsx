@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { initAxiosInstance } from "@core/services/api";
+import "react-big-calendar/lib/sass/styles.scss";
 
 const queryClient = new QueryClient({
   defaultOptions: {

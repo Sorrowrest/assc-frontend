@@ -1,0 +1,33 @@
+@import "src/shared";
+
+.wrapper {
+  display: grid;
+  grid-template-columns: .6fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0%;
+  grid-template-areas:
+    ". .";
+}
+
+.itemBlock {
+  box-shadow: none;
+}
+
+.eventsBlock {
+  position: relative;
+  background-color: $secondary;
+}
+
+.todayInfo {
+  position: absolute;
+  bottom: 100%;
+  padding-bottom: 8px;
+}
+
+.infoBlock {
+  position: relative;
+  background-color: $secondary;
+  padding: 30px;
+  border-left: 1px solid $four;
+}
+

@@ -1,0 +1,34 @@
+@import "src/shared";
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 57px 45px;
+  grid-template-areas:
+    ". ."
+    "selfGoing selfGoing";
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scheduleBlock {
+  background-color: $third;
+  padding: 15px 20px 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.selfGoing {
+  grid-area: selfGoing;
+  background-color: $primary;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}

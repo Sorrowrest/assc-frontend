@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./auth.module.scss";
+import styles from "./index.module.scss";
 import { Icons } from "@app/assets";
 import { AuthForm } from "@app/modules/auth/authForm";
 

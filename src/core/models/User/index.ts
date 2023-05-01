@@ -3,7 +3,6 @@ import Event from "../Event";
 export interface User {
   _id: string;
   events: Event[];
-  _clubId: null;
   firstName: string;
   lastName: string;
   secondName: string;
