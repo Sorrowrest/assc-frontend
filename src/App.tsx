@@ -9,31 +9,37 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { initAxiosInstance } from "@core/services/api";
 import "react-big-calendar/lib/sass/styles.scss";
+import "dayjs/locale/ru";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: { retry: false },
-  },
-});
 initAxiosInstance();
 
 function App() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+    },
+  });
+
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <Router />
-        <ToastContainer
-          position="bottom-right"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          draggable
-          theme="light"
-        />
-      </ThemeProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
+        <ThemeProvider theme={theme}>
+          <Router />
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            draggable
+            theme="light"
+          />
+        </ThemeProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </LocalizationProvider>
     </QueryClientProvider>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { AuthScreen } from "./auth";
-import { useIsAuth } from "@app/modules/auth/hooks/useIsAuth";
+import { useProfile } from "@app/modules/auth/hooks/useProfile";
 import { useProfileStore } from "@app/modules/auth/";
 import { LayoutComponent } from "@app/modules/layout/";
 import { MainScreen } from "@app/pages/main";
@@ -11,7 +11,7 @@ import { ProfileScreen } from "@app/pages/main/profile";
 import { EventsScreen } from "@app/pages/main/events";
 
 export const Router = () => {
-  const { isLoading, data } = useIsAuth();
+  const { isLoading, data } = useProfile();
   const navigate = useNavigate();
   const { removeAll } = useProfileStore();
 

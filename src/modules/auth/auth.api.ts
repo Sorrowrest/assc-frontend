@@ -26,3 +26,17 @@ export const signIn = async (data: SignInRequest) => {
     console.error(e);
   }
 };
+
+export const editAvatar = async (photo: File) => {
+  try {
+    const formData = new FormData();
+    formData.append("files", photo);
+    const response = await axios.post<{ access_token: string }>(
+      "users/avatar",
+      formData
+    );
+    return response;
+  } catch (e) {
+    console.error(e);
+  }
+};

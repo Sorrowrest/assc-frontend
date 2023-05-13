@@ -18,7 +18,6 @@ const TooltipPlace: React.FC<PlaceBlock["info"][0]> = ({
   contactWithDriver,
   name,
 }) => {
-  console.log(name);
   return (
     <div className={styles.blockTooltip}>
       <Text color={colors.four}>{name}</Text>

@@ -13,4 +13,8 @@
 .calendar {
   background-color: $secondary;
   padding: 20px;
+
+  & * {
+    font-size: 12px;
+  }
 }

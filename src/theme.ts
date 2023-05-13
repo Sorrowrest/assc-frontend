@@ -16,9 +16,5 @@ export const theme = createTheme({
     mode: "light",
     primary: createColor("#5191FA", "#FFFFFF"),
     secondary: createColor("#FFFFFF", "#5191FA"),
-    text: {
-      primary: "#FFFFFF",
-      secondary: "#5191FA",
-    },
   },
 });
