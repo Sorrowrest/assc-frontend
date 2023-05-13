@@ -25,7 +25,7 @@ export const EventItem: React.FC<EventItemProps> = ({
       <Icons.ItemVector />
       <div>
         <Text alternative size={14} color={colors.gray}>
-          {firstTime} - {secondTime} {audience}
+          {firstTime} - {secondTime} <strong>{audience}</strong>
         </Text>
         <Text size={16}>{name}</Text>
       </div>

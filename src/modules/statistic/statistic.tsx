@@ -2,25 +2,31 @@ import React from "react";
 import styles from "./statistic.module.scss";
 import { Text } from "@app/ui";
 import { colors } from "@app/shared";
-import { useProfileStore } from "@app/modules/auth";
+import { Link } from "react-router-dom";
+import { useProfile } from "@app/modules/auth/hooks/useProfile";
 
 export const StatisticBlock = () => {
-  const { profile } = useProfileStore();
+  const { data: profile } = useProfile();
 
   return (
-    <div className={styles.wrapper}>
-      <Text className={styles.text} size={20} color={colors.secondary}>
-        ССК "Реактор"
-      </Text>
-      <div className={styles.avatarBlock}>
-        <div className={styles.avatar}></div>
+    <Link to="/profile">
+      <div className={styles.wrapper}>
+        <Text className={styles.text} size={20} color={colors.secondary}>
+          ССК "Реактор"
+        </Text>
+        <div className={styles.avatarBlock}>
+          <div
+            style={{ backgroundImage: `url(${profile?.data.avatar})` }}
+            className={styles.avatar}
+          ></div>
+          <Text className={styles.text} size={16} color={colors.secondary}>
+            {`${profile?.data.firstName} ${profile?.data.lastName}`}
+          </Text>
+        </div>
         <Text className={styles.text} size={16} color={colors.secondary}>
-          {`${profile?.firstName} ${profile?.lastName}`}
+          Спортивный менеджер
         </Text>
       </div>
-      <Text className={styles.text} size={16} color={colors.secondary}>
-        Спортивный менеджер
-      </Text>
-    </div>
+    </Link>
   );
 };
