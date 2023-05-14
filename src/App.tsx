@@ -3,7 +3,7 @@ import React from "react";
 import "./App.scss";
 import { Router } from "./pages/router";
 import { theme } from "@app/theme";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -12,13 +12,42 @@ import "react-big-calendar/lib/sass/styles.scss";
 import "dayjs/locale/ru";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import isBetween from "dayjs/plugin/isBetween";
+import dayjs from "dayjs";
+
+dayjs.extend(isBetween);
 
 initAxiosInstance();
 
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
-      queries: { retry: false },
+      mutations: {
+        onError: (err: any) => {
+          if (err?.response.data.message) {
+            toast.error(
+              `${err?.response.data.message} - ${err.response.status}`
+            );
+          }
+          throw new Error(err);
+        },
+        onSuccess: (res: any) => {
+          if (res?.response.data.message) {
+            toast.success(`${res?.response.data.message}`);
+          }
+        },
+      },
+      queries: {
+        retry: false,
+        onError: (err: any) => {
+          if (err?.response.data.message) {
+            toast.error(
+              `${err?.response.data.message} - ${err.response.status}`
+            );
+          }
+          throw new Error(err);
+        },
+      },
     },
   });
 
