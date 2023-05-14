@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { SignInRequest } from "@app/modules/auth/auth.type";
+import { SignInRequest, UserUpdateRequest } from "@app/modules/auth/auth.type";
 import { User } from "@core/models/User";
 
 export const getAuth = async (token?: string | null) => {
@@ -16,27 +16,32 @@ export const getAuth = async (token?: string | null) => {
 };
 
 export const signIn = async (data: SignInRequest) => {
-  try {
-    const response = await axios.post<{ access_token: string }>(
-      "auth/login",
-      data
-    );
-    return response.data.access_token;
-  } catch (e) {
-    console.error(e);
-  }
+  const response = await axios.post<{ access_token: string }>(
+    "auth/login",
+    data
+  );
+  return response.data.access_token;
 };
 
 export const editAvatar = async (photo: File) => {
-  try {
-    const formData = new FormData();
-    formData.append("files", photo);
-    const response = await axios.post<{ access_token: string }>(
-      "users/avatar",
-      formData
-    );
-    return response;
-  } catch (e) {
-    console.error(e);
-  }
+  const formData = new FormData();
+  formData.append("files", photo);
+  const response = await axios.post<{ access_token: string }>(
+    "users/avatar",
+    formData
+  );
+  return response;
+};
+
+export const updateUser = async (data: UserUpdateRequest) => {
+  const response = await axios.put<User>("users", data);
+  return response;
+};
+
+export const updatePassword = async (data: {
+  oldPassword: string;
+  newPassword: string;
+}) => {
+  const response = await axios.put<User>("users/change-password", data);
+  return response;
 };

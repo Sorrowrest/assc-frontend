@@ -3,10 +3,10 @@
 .wrapper {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 40px 40px;
   grid-template-areas:
-    ". . .";
+    ". . . .";
   padding: 0 68px;
 }
 

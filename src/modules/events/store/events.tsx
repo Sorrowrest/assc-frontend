@@ -1,4 +1,4 @@
-import { Event } from "../event.type";
+import { Event } from "../events.type";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 

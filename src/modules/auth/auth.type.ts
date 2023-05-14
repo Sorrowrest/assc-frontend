@@ -1,5 +1,5 @@
 import { BaseModel } from "sjs-base-model";
-import { Event } from "@app/modules/events/event.type";
+import { Event } from "@app/modules/events/events.type";
 
 export type SignInRequest = {
   username: string;
@@ -18,9 +18,6 @@ export class User extends BaseModel {
   public gender: "male" | "female" = "male";
   public birthday: Date = new Date();
   public phone = "";
-  public clothingSize: "XXS" | "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL" =
-    "M";
-  public role: "Admin" | "User" = "User";
 
   constructor(data: User) {
     super();
@@ -31,3 +28,10 @@ export class User extends BaseModel {
     super.update(data);
   }
 }
+
+export type UserUpdateRequest = Omit<
+  User,
+  "password" | "events" | "birthday"
+> & {
+  birthday: number;
+};

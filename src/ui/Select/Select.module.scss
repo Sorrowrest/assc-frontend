@@ -1,0 +1,21 @@
+@import "src/shared";
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+
+  &__primary {
+    color: $primary;
+  }
+
+  &__secondary {
+    color: $secondary;
+  }
+}
+
+.wrapper {
+  width: 100%;
+}
+

@@ -3,7 +3,7 @@ import { User } from "@app/modules/auth/auth.type";
 
 export class Event extends BaseModel {
   public _id = "";
-  public author: User["_id"] = "";
+  public author: Partial<User> = {};
   public title = "";
   public isEat = false;
   public description = "";
@@ -11,7 +11,7 @@ export class Event extends BaseModel {
   public dateStart: Date = new Date();
   public dateEnd: Date = new Date();
   public category = "";
-  public members: User["_id"][] = [];
+  public members: User[] = [];
   public isPublished = false;
 
   constructor(data: Event) {
@@ -23,3 +23,8 @@ export class Event extends BaseModel {
     super.update(data);
   }
 }
+
+export type TRegisterEvent = {
+  _id: string;
+  userId: string;
+};

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { editAvatar, getAuth } from "../auth.api";
+import { editAvatar, getAuth, updatePassword, updateUser } from "../auth.api";
 import {
   ProfileStateProps,
   useProfileStore,
@@ -7,6 +7,7 @@ import {
 import { User } from "@app/core/models/User";
 import { AxiosResponse } from "axios";
 import { STALE_TIME } from "@core/services";
+import { UserUpdateRequest } from "@app/modules/auth/auth.type";
 
 const onError = (removeAll: ProfileStateProps["removeAll"]) => {
   removeAll();
@@ -33,11 +34,34 @@ export const useProfile = () => {
     }
   );
 
+  const handleUpdateUser = useMutation(
+    ["profile"],
+    async (data: UserUpdateRequest) => await updateUser(data),
+    {
+      onSuccess: () => refetch(),
+    }
+  );
+
+  const handleUpdatePassword = useMutation(
+    ["profile"],
+    async (data: { oldPassword: string; newPassword: string }) =>
+      await updatePassword(data),
+    {
+      onSuccess: () => refetch(),
+    }
+  );
+
   if (!accessToken)
     return {
       isLoading: false,
       data: null,
     };
 
-  return { data, isLoading, handleUpdateAvatar };
+  return {
+    data,
+    isLoading,
+    handleUpdateUser,
+    handleUpdateAvatar,
+    handleUpdatePassword,
+  };
 };
