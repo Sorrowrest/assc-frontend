@@ -18,7 +18,12 @@ export const AsideMenu = () => {
       <Text.Link className={styles.link} size={12} to="/events">
         мероприятия
       </Text.Link>
-      <Text.Link className={styles.link} size={12} to="/curator">
+      <Text.Link
+        external
+        className={styles.link}
+        size={12}
+        to="https://t.me/byeraon"
+      >
         связь с куратором
       </Text.Link>
     </aside>

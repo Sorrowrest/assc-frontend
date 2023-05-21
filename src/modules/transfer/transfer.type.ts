@@ -22,3 +22,7 @@ export class TTransfer extends BaseModel {
     super.update(data);
   }
 }
+
+export type TUpdateTransfer = Partial<TTransfer>;
+
+export type TDeleteTransfer = { id: string };

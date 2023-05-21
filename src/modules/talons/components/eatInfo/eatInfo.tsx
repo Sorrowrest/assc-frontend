@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import dayjs from "dayjs";
 
 import styles from "./eatInfo.module.scss";
@@ -10,11 +10,9 @@ export const EatInfo = () => {
   const now = dayjs().format("L");
   const { data: events } = useEventsData();
 
-  const eatEvents = useMemo(() => {
-    if (events) {
-      return events.filter((event) => event.category === "eat");
-    }
-  }, [events]);
+  const eatEvents = events
+    ? events.filter((event) => event.category === "eat")
+    : [];
 
   return (
     <div className={styles.wrapper}>

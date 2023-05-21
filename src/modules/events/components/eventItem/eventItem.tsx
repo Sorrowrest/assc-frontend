@@ -10,7 +10,6 @@ type EventItemProps = {
   firstTime: string;
   secondTime: string;
   id: string;
-  audience: string;
   name: string;
   className?: string;
 };
@@ -21,7 +20,6 @@ export const EventItem: React.FC<EventItemProps> = ({
   secondTime,
   name,
   className,
-  audience,
 }) => {
   return (
     <Link to={`/events/${id}`}>
@@ -29,7 +27,7 @@ export const EventItem: React.FC<EventItemProps> = ({
         <Icons.ItemVector />
         <div>
           <Text alternative size={14} color={colors.gray}>
-            {firstTime} - {secondTime} <strong>{audience}</strong>
+            {firstTime} - {secondTime}
           </Text>
           <Text size={16}>{name}</Text>
         </div>

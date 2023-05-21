@@ -1,6 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEventsData } from "@app/modules/events/hooks/useEventsData";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { toast } from "react-toastify";
 import { DataShow } from "@app/modules/event/components/dataShow/dataShow";
 import dayjs from "dayjs";
@@ -9,6 +15,10 @@ import styles from "./event.module.scss";
 import { Button } from "@app/ui";
 import { EditModeWrapper } from "@app/modules/event/components/editModeWrapper/editModeWrapper";
 import { useFormik } from "formik";
+
+interface Event<T = EventTarget> {
+  target: T;
+}
 
 const nameByCategory = {
   sport: "Спортивные",
@@ -23,9 +33,16 @@ export const EventBlock = () => {
     data: events,
     handleRegisterEvent,
     handleUpdateEvent,
+    handleAddEventPhoto,
+    handleDeleteEvent,
     handleUnRegisterEvent,
   } = useEventsData();
   const navigate = useNavigate();
+  const [newImage, setAvatar] = useState<null | {
+    file: File;
+    base64: string;
+  }>(null);
+  const imageRef = useRef<HTMLInputElement>(null);
 
   const event = useMemo(() => {
     if (events && eventId) {
@@ -33,6 +50,18 @@ export const EventBlock = () => {
     }
     return undefined;
   }, [eventId, events]);
+
+  const onFileUpload = (event: Event<HTMLInputElement>) => {
+    const fileUploaded = event.target.files;
+    if (fileUploaded && fileUploaded.length > 0) {
+      const file = fileUploaded[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setAvatar({ file, base64: reader.result as string });
+      };
+    }
+  };
 
   const { setFieldValue, handleSubmit } = useFormik({
     initialValues: {
@@ -59,6 +88,22 @@ export const EventBlock = () => {
       }
     },
   });
+
+  const fileAdd = () => {
+    if (imageRef.current) {
+      imageRef.current.click();
+    }
+  };
+
+  const handlePushPhoto = async () => {
+    if (newImage && handleAddEventPhoto) {
+      const response = await handleAddEventPhoto.mutate({
+        photo: newImage.file,
+        id: eventId as string,
+      });
+      console.log(response);
+    }
+  };
 
   useEffect(() => {
     if (event === null) {
@@ -132,13 +177,36 @@ export const EventBlock = () => {
           value={event.description}
         ></EditModeWrapper>
       </div>
-      {event.photos.length > 0 ? (
-        <img
-          alt="Фото мероприятия"
-          className={styles.image}
-          width={250}
-          src={event.photos[0]}
-        ></img>
+      {event.photos ? (
+        <div className={styles.wrapImage}>
+          {(event.photos.length > 0 || newImage) && (
+            <img
+              alt="Фото мероприятия"
+              className={styles.image}
+              width={250}
+              src={newImage?.base64 || event.photos[0]}
+            ></img>
+          )}
+          {event.author._id === profile?.data._id && isEditMode && (
+            <>
+              <input
+                onChange={onFileUpload}
+                accept="image/png, image/jpeg"
+                style={{ display: "none" }}
+                ref={imageRef}
+                type="file"
+              />
+              <Button onClick={fileAdd} color="primary">
+                Изменить фотографию
+              </Button>
+              {newImage && (
+                <Button onClick={handlePushPhoto} color="primary">
+                  Сохранить
+                </Button>
+              )}
+            </>
+          )}
+        </div>
       ) : (
         <div></div>
       )}
@@ -162,6 +230,14 @@ export const EventBlock = () => {
         {isEditMode && (
           <Button type="submit" color="primary">
             Сохранить
+          </Button>
+        )}
+        {isEditMode && (
+          <Button
+            onClick={() => handleDeleteEvent.mutate({ id: eventId as string })}
+            color="primary"
+          >
+            Удалить
           </Button>
         )}
       </div>

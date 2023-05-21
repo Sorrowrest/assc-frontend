@@ -14,12 +14,12 @@ export class TEvent extends BaseModel {
   public members: TUser[] = [];
   public isPublished = false;
 
-  constructor(data: Event) {
+  constructor(data: Partial<TEvent>) {
     super();
     this.update(data);
   }
 
-  update(data: Event) {
+  update(data: Partial<TEvent>) {
     super.update(data);
   }
 }
@@ -36,3 +36,5 @@ export type TUpdateEvent = {
   dateStart: number;
   dateEnd: number;
 };
+
+export type TDeleteEvent = { id: string };

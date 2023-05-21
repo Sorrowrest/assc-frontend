@@ -23,7 +23,6 @@ export const EventsMain: React.FC<Props> = ({ itemClassName, tableEvents }) => {
                 id={event._id}
                 firstTime={dayjs(event.dateStart).format("DD.MM HH:MM")}
                 secondTime={dayjs(event.dateEnd).format("DD.MM HH:MM")}
-                audience={"b23"}
                 name={event.title}
               />
             ))}

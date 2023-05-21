@@ -2,19 +2,25 @@ import React from "react";
 
 import styles from "./transferInfo.module.scss";
 import { PlaceBlock } from "@app/modules/transfer/components/placeBlock/placeBlock";
-import { Text } from "@app/ui";
+import { Button, Text } from "@app/ui";
 import { colors } from "@app/shared";
 import { useTransferData } from "@app/modules/transfer/hooks/useTransferData";
+import { TTransfer } from "@app/modules/transfer/transfer.type";
+import { useProfile } from "@app/modules/auth/hooks/useProfile";
+import { Role } from "@app/modules/auth/auth.type";
 
 export const TransferInfo = () => {
-  const transfer = useTransferData();
+  const { data, handleCreateEmptyTransfer } = useTransferData();
+  const { data: profile } = useProfile();
 
   const checkInTransfers =
-    transfer.data &&
-    transfer.data.filter((trans) => trans.dayType === "checkin");
+    data && data.filter((trans) => trans.dayType === "checkin");
   const checkOutTransfers =
-    transfer.data &&
-    transfer.data.filter((trans) => trans.dayType === "checkout");
+    data && data.filter((trans) => trans.dayType === "checkout");
+
+  const handleCreateEmpty = (type: TTransfer["dayType"]) => {
+    handleCreateEmptyTransfer.mutate(type);
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -24,6 +30,8 @@ export const TransferInfo = () => {
           {checkInTransfers &&
             checkInTransfers.map((trans) => (
               <PlaceBlock
+                key={trans._id}
+                id={trans._id}
                 title={trans.title}
                 info={trans.transfers.map((oneTrans) => ({
                   name: oneTrans.busName,
@@ -33,6 +41,14 @@ export const TransferInfo = () => {
                 }))}
               />
             ))}
+          {profile?.data.role === Role.Admin && (
+            <Button
+              onClick={() => handleCreateEmpty("checkin")}
+              color="secondary"
+            >
+              Добавить
+            </Button>
+          )}
         </div>
       </div>
       <div className={styles.infoBlock}>
@@ -41,6 +57,8 @@ export const TransferInfo = () => {
           {checkOutTransfers &&
             checkOutTransfers.map((trans) => (
               <PlaceBlock
+                key={trans._id}
+                id={trans._id}
                 title={trans.title}
                 info={trans.transfers.map((oneTrans) => ({
                   name: oneTrans.busName,
@@ -50,6 +68,14 @@ export const TransferInfo = () => {
                 }))}
               />
             ))}
+          {profile?.data.role === Role.Admin && (
+            <Button
+              onClick={() => handleCreateEmpty("checkout")}
+              color="secondary"
+            >
+              Добавить
+            </Button>
+          )}
         </div>
       </div>
       <div className={styles.selfGoing}>
