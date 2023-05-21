@@ -1,0 +1,22 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 10px 10px;
+  grid-template-areas:
+    ". ."  "fullWidth fullWidth";
+}
+
+.fullWidth {
+  margin-left: auto;
+  grid-area: fullWidth;
+}
+
+.image {
+  margin-left: auto;
+}
+
+.wrapImage {
+  display: flex;
+  flex-direction: column;
+}

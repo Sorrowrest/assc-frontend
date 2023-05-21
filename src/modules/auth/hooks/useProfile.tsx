@@ -4,10 +4,10 @@ import {
   ProfileStateProps,
   useProfileStore,
 } from "@app/modules/auth/store/profile";
-import { User } from "@app/core/models/User";
 import { AxiosResponse } from "axios";
 import { STALE_TIME } from "@core/services";
-import { UserUpdateRequest } from "@app/modules/auth/auth.type";
+import { TUser, UserUpdateRequest } from "@app/modules/auth/auth.type";
+import { toast } from "react-toastify";
 
 const onError = (removeAll: ProfileStateProps["removeAll"]) => {
   removeAll();
@@ -17,7 +17,7 @@ export const useProfile = () => {
   const { accessToken, setProfile, removeAll } = useProfileStore();
 
   const { data, isLoading, refetch } = useQuery<
-    AxiosResponse<User> | null,
+    AxiosResponse<TUser> | null,
     Error
   >(["profile"], () => getAuth(accessToken), {
     onError: () => onError(removeAll),
@@ -30,7 +30,10 @@ export const useProfile = () => {
     ["profile"],
     async (photo: File) => await editAvatar(photo),
     {
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        toast.success("Аватар обновлен!");
+        refetch();
+      },
     }
   );
 
@@ -38,7 +41,10 @@ export const useProfile = () => {
     ["profile"],
     async (data: UserUpdateRequest) => await updateUser(data),
     {
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        toast.success("Данные обновлены!");
+        refetch();
+      },
     }
   );
 
@@ -47,7 +53,10 @@ export const useProfile = () => {
     async (data: { oldPassword: string; newPassword: string }) =>
       await updatePassword(data),
     {
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        toast.success("Пароль обновлен!");
+        refetch();
+      },
     }
   );
 

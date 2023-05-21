@@ -4,15 +4,21 @@ import dayjs from "dayjs";
 import styles from "./eatInfo.module.scss";
 import { EventsMain } from "@app/modules/events";
 import { Text } from "@app/ui";
+import { useEventsData } from "@app/modules/events/hooks/useEventsData";
 
 export const EatInfo = () => {
   const now = dayjs().format("L");
+  const { data: events } = useEventsData();
+
+  const eatEvents = events
+    ? events.filter((event) => event.category === "eat")
+    : [];
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.eventsBlock}>
         <Text className={styles.todayInfo}>сегодня {now}</Text>
-        <EventsMain itemClassName={styles.itemBlock} />
+        <EventsMain tableEvents={eatEvents} itemClassName={styles.itemBlock} />
       </div>
       <div className={styles.infoBlock}>
         <Text className={styles.todayInfo}>Как получить талоны?</Text>

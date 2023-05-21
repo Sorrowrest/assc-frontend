@@ -9,6 +9,10 @@ import { TalonsScreen } from "@app/pages/main/talons";
 import { TransferScreen } from "@app/pages/main/transfer";
 import { ProfileScreen } from "@app/pages/main/profile";
 import { EventsScreen } from "@app/pages/main/events";
+import { EventScreen } from "@app/pages/main/events/[id]";
+import { GetTalonsScreen } from "@app/pages/main/getTalons";
+import { Role } from "@app/modules/auth/auth.type";
+import { MapScreen } from "@app/pages/main/map";
 
 export const Router = () => {
   const { isLoading, data } = useProfile();
@@ -30,7 +34,15 @@ export const Router = () => {
         <Route path="/talons" element={<TalonsScreen />} />
         <Route path="/transfer" element={<TransferScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/events" element={<EventsScreen />} />
+        <Route path="/events">
+          <Route index element={<EventsScreen />}></Route>
+          <Route path=":eventId" element={<EventScreen />}></Route>
+        </Route>
+        <Route path="/map" element={<MapScreen />}></Route>
+        <Route path="/events/" element={<EventsScreen />} />
+        {data?.data.role === Role.TalonsMan && (
+          <Route path="/getTalons/:userId" element={<GetTalonsScreen />} />
+        )}
       </Route>
     </Routes>
   );

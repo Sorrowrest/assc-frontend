@@ -1,10 +1,10 @@
-import { Event } from "../events.type";
+import { TEvent } from "../events.type";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
 export type EventsStateProps = {
-  events: Event[] | null;
-  setEvents: (events: Event[] | null) => void;
+  events: TEvent[] | null;
+  setEvents: (events: TEvent[] | null) => void;
   removeEvents: () => void;
 };
 

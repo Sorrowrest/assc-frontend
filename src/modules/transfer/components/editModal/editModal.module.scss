@@ -1,0 +1,27 @@
+@import "src/shared";
+
+.wrapper {
+  padding: 20px;
+  width: 500px;
+  outline: none;
+  height: 500px;
+  overflow: scroll;
+  background: $gradient;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addButton {
+  float: right;
+}
+
+.wrapBlock {
+  width: 100%;
+}

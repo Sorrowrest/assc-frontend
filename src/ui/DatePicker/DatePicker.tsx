@@ -1,11 +1,8 @@
-import {
-  DatePicker as MUIDatePicker,
-  DatePickerProps,
-} from "@mui/x-date-pickers";
+import { DateTimePicker, DateTimePickerProps } from "@mui/x-date-pickers";
 import React from "react";
 import { styled } from "@mui/material/styles";
 
-const CustomDatePicker = styled(MUIDatePicker)({
+const CustomDatePicker = styled(DateTimePicker)({
   width: "100%",
   backgroundColor: "white",
   marginTop: 8,
@@ -41,6 +38,6 @@ const CustomDatePicker = styled(MUIDatePicker)({
   },
 });
 
-export const DatePicker: React.FC<DatePickerProps<any>> = (props) => {
+export const DatePicker: React.FC<DateTimePickerProps<any>> = (props) => {
   return <CustomDatePicker {...props} />;
 };

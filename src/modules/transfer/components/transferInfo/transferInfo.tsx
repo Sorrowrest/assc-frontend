@@ -1,116 +1,81 @@
 import React from "react";
-import dayjs from "dayjs";
 
 import styles from "./transferInfo.module.scss";
 import { PlaceBlock } from "@app/modules/transfer/components/placeBlock/placeBlock";
-import { Text } from "@app/ui";
+import { Button, Text } from "@app/ui";
 import { colors } from "@app/shared";
+import { useTransferData } from "@app/modules/transfer/hooks/useTransferData";
+import { TTransfer } from "@app/modules/transfer/transfer.type";
+import { useProfile } from "@app/modules/auth/hooks/useProfile";
+import { Role } from "@app/modules/auth/auth.type";
 
 export const TransferInfo = () => {
-  const now = dayjs().format("L");
+  const { data, handleCreateEmptyTransfer } = useTransferData();
+  const { data: profile } = useProfile();
+
+  const checkInTransfers =
+    data && data.filter((trans) => trans.dayType === "checkin");
+  const checkOutTransfers =
+    data && data.filter((trans) => trans.dayType === "checkout");
+
+  const handleCreateEmpty = (type: TTransfer["dayType"]) => {
+    handleCreateEmptyTransfer.mutate(type);
+  };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.infoBlock}>
         <p>День заезда</p>
         <div className={styles.scheduleBlock}>
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
+          {checkInTransfers &&
+            checkInTransfers.map((trans) => (
+              <PlaceBlock
+                key={trans._id}
+                id={trans._id}
+                title={trans.title}
+                info={trans.transfers.map((oneTrans) => ({
+                  name: oneTrans.busName,
+                  aboutBus: oneTrans.number,
+                  contactWithDriver: oneTrans.contact,
+                  time: oneTrans.time,
+                }))}
+              />
+            ))}
+          {profile?.data.role === Role.Admin && (
+            <Button
+              onClick={() => handleCreateEmpty("checkin")}
+              color="secondary"
+            >
+              Добавить
+            </Button>
+          )}
         </div>
       </div>
       <div className={styles.infoBlock}>
         <p>День отъезда</p>
         <div className={styles.scheduleBlock}>
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
+          {checkOutTransfers &&
+            checkOutTransfers.map((trans) => (
+              <PlaceBlock
+                key={trans._id}
+                id={trans._id}
+                title={trans.title}
+                info={trans.transfers.map((oneTrans) => ({
+                  name: oneTrans.busName,
+                  aboutBus: oneTrans.number,
+                  contactWithDriver: oneTrans.contact,
+                  time: oneTrans.time,
+                }))}
+              />
+            ))}
+          {profile?.data.role === Role.Admin && (
+            <Button
+              onClick={() => handleCreateEmpty("checkout")}
+              color="secondary"
+            >
+              Добавить
+            </Button>
+          )}
         </div>
       </div>
       <div className={styles.selfGoing}>

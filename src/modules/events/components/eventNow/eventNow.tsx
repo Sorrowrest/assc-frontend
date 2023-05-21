@@ -12,14 +12,16 @@ export const EventNowCard = () => {
 
   const nowEvent = useMemo(() => {
     if (data) {
-      return data.find((event) =>
-        dayjs(new Date()).isBetween(
-          event.dateStart,
-          event.dateEnd,
-          "minute",
-          "[]"
-        )
-      );
+      return data
+        .filter((event) => event.category !== "eat")
+        .find((event) =>
+          dayjs(new Date()).isBetween(
+            event.dateStart,
+            event.dateEnd,
+            "minute",
+            "[]"
+          )
+        );
     }
     return undefined;
   }, [data]);
