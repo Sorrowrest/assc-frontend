@@ -12,7 +12,7 @@ export const UserQr = () => {
       <QRCode
         bgColor={colors.primary}
         className={styles.qr}
-        value={profile?._id as string}
+        value={`${window.location.origin}/getTalon/${profile?._id as string}`}
       />
     </div>
   );

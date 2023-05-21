@@ -9,6 +9,7 @@ import { TalonsScreen } from "@app/pages/main/talons";
 import { TransferScreen } from "@app/pages/main/transfer";
 import { ProfileScreen } from "@app/pages/main/profile";
 import { EventsScreen } from "@app/pages/main/events";
+import { EventScreen } from "@app/pages/main/events/[id]";
 
 export const Router = () => {
   const { isLoading, data } = useProfile();
@@ -30,7 +31,11 @@ export const Router = () => {
         <Route path="/talons" element={<TalonsScreen />} />
         <Route path="/transfer" element={<TransferScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
-        <Route path="/events" element={<EventsScreen />} />
+        <Route path="/events">
+          <Route index element={<EventsScreen />}></Route>
+          <Route path=":eventId" element={<EventScreen />}></Route>
+        </Route>
+        <Route path="/events/" element={<EventsScreen />} />
       </Route>
     </Routes>
   );

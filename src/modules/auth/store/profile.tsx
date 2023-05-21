@@ -1,11 +1,12 @@
-import { User } from "@app/core/models/User";
+import { TUser } from "@app/modules/auth/auth.type";
+
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 export type ProfileStateProps = {
-  profile: User | null;
+  profile: TUser | null;
   accessToken: string | null;
-  setProfile: (profile: User | null) => void;
+  setProfile: (profile: TUser | null) => void;
   setAccessToken: (token: string | null) => void;
   removeAll: () => void;
 };

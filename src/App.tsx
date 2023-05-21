@@ -14,12 +14,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import dayjs from "dayjs";
+import { useProfileStore } from "@app/modules/auth";
 
 dayjs.extend(isBetween);
 
 initAxiosInstance();
 
 function App() {
+  const { profile } = useProfileStore();
   const queryClient = new QueryClient({
     defaultOptions: {
       mutations: {
@@ -38,6 +40,7 @@ function App() {
         },
       },
       queries: {
+        enabled: !!profile,
         retry: false,
         onError: (err: any) => {
           if (err?.response.data.message) {

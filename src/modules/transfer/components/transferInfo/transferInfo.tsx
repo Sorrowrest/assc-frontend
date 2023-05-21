@@ -1,116 +1,55 @@
 import React from "react";
-import dayjs from "dayjs";
 
 import styles from "./transferInfo.module.scss";
 import { PlaceBlock } from "@app/modules/transfer/components/placeBlock/placeBlock";
 import { Text } from "@app/ui";
 import { colors } from "@app/shared";
+import { useTransferData } from "@app/modules/transfer/hooks/useTransferData";
 
 export const TransferInfo = () => {
-  const now = dayjs().format("L");
+  const transfer = useTransferData();
+
+  const checkInTransfers =
+    transfer.data &&
+    transfer.data.filter((trans) => trans.dayType === "checkin");
+  const checkOutTransfers =
+    transfer.data &&
+    transfer.data.filter((trans) => trans.dayType === "checkout");
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.infoBlock}>
         <p>День заезда</p>
         <div className={styles.scheduleBlock}>
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
+          {checkInTransfers &&
+            checkInTransfers.map((trans) => (
+              <PlaceBlock
+                title={trans.title}
+                info={trans.transfers.map((oneTrans) => ({
+                  name: oneTrans.busName,
+                  aboutBus: oneTrans.number,
+                  contactWithDriver: oneTrans.contact,
+                  time: oneTrans.time,
+                }))}
+              />
+            ))}
         </div>
       </div>
       <div className={styles.infoBlock}>
         <p>День отъезда</p>
         <div className={styles.scheduleBlock}>
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
-          <PlaceBlock
-            title="Аэропорт"
-            info={[
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-              {
-                time: "10:00",
-                aboutBus: "Higer KLQ6128LQ B 536 TE",
-                contactWithDriver: "https://t.me/byeraon",
-                name: "Автобус 55 мест",
-              },
-            ]}
-          />
+          {checkOutTransfers &&
+            checkOutTransfers.map((trans) => (
+              <PlaceBlock
+                title={trans.title}
+                info={trans.transfers.map((oneTrans) => ({
+                  name: oneTrans.busName,
+                  aboutBus: oneTrans.number,
+                  contactWithDriver: oneTrans.contact,
+                  time: oneTrans.time,
+                }))}
+              />
+            ))}
         </div>
       </div>
       <div className={styles.selfGoing}>

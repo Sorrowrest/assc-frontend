@@ -4,11 +4,13 @@ import { Calendar, dayjsLocalizer } from "react-big-calendar";
 import "moment/locale/ru";
 import { useEventsData } from "@app/modules/events/hooks/useEventsData";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 const localizer = dayjsLocalizer(dayjs);
 
 export const EventsBlock = () => {
   const { data: events } = useEventsData();
+  const navigate = useNavigate();
   const tableEvents = useMemo(() => {
     if (events) {
       return events.map((event) => ({
@@ -26,6 +28,7 @@ export const EventsBlock = () => {
       <div className={styles.calendar}>
         <Calendar
           localizer={localizer}
+          onSelectEvent={(event) => navigate(`/events/${event._id}`)}
           events={tableEvents}
           startAccessor="start"
           endAccessor="end"

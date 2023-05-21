@@ -1,10 +1,16 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Event, TRegisterEvent } from "../events.type";
+import { TEvent, TRegisterEvent, TUpdateEvent } from "../events.type";
 import { STALE_TIME } from "@core/services";
-import { fetchEvents, registerEvent, unRegisterEvent } from "../events.api";
+import {
+  fetchEvents,
+  registerEvent,
+  unRegisterEvent,
+  updateEvent,
+} from "../events.api";
+import { toast } from "react-toastify";
 
 export const useEventsData = () => {
-  const { data, refetch } = useQuery<Event[]>(["events"], fetchEvents, {
+  const { data, refetch } = useQuery<TEvent[]>(["events"], fetchEvents, {
     staleTime: STALE_TIME,
   });
 
@@ -12,7 +18,10 @@ export const useEventsData = () => {
     ["events"],
     async (data: TRegisterEvent) => await registerEvent(data),
     {
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        refetch();
+        toast.success("Вы зарегистрированы на мероприятие!");
+      },
     }
   );
 
@@ -20,9 +29,28 @@ export const useEventsData = () => {
     ["events"],
     async (data: TRegisterEvent) => await unRegisterEvent(data),
     {
-      onSuccess: () => refetch(),
+      onSuccess: () => {
+        refetch();
+        toast.success("Вы отписались от мероприятия!");
+      },
     }
   );
 
-  return { data, handleRegisterEvent, handleUnRegisterEvent };
+  const handleUpdateEvent = useMutation(
+    ["events"],
+    async (data: Partial<TUpdateEvent>) => await updateEvent(data),
+    {
+      onSuccess: () => {
+        refetch();
+        toast.success("Мероприятие обновлено!");
+      },
+    }
+  );
+
+  return {
+    data,
+    handleRegisterEvent,
+    handleUnRegisterEvent,
+    handleUpdateEvent,
+  };
 };
